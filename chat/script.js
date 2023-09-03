@@ -143,3 +143,206 @@ const userAxios = axios.create({
 
 }
 
+//block for seperation of concerns
+{
+
+    userAxios.get("/get-users") //api call to get all the users present into DB
+        .then((res) => {
+            const userListDiv = document.getElementById("user-list");
+            userListDiv.innerHTML = "";
+            res.data.user.forEach((user) => {
+                userListDiv.innerHTML += `
+              <li id='user-${user.id}' class="user-list-inside" style="padding:5px 0;" user-list-li>
+              <span>${user.name}</span>
+              <span>${user.email}</span>
+              <label for="accept">Admin</label>
+              <input type="checkbox" id="accept">
+              <button id="add-user-btn" class="user-btn">Add</button>
+              </li> `;
+            });
+        })
+        .catch((err) => console.log(err.response));
+
+    document.getElementById("user-list").addEventListener("click", (e) => {
+        //for adding/removing users
+        const email = e.target.parentNode.children[1].innerText;
+
+        const isAdmin = e.target.parentNode.children[3].checked;
+
+
+        if (localStorage.getItem("groupId") == null) {
+            return alert("Please select a group first");
+        }
+        const obj = {
+            email: email, //getting email of user
+            groupId: localStorage.getItem("groupId"), //groupID from localstore
+            isAdmin: isAdmin, //isAdmin value
+        };
+
+
+        if (e.target.id === "add-user-btn") {
+            userAxios
+                .post("/add-user", obj)
+                .then((res) => {
+                    console.log(res.data);
+                    alert(`user with ${email} added to the group`);
+                })
+                .catch((err) => {
+                    console.log(err.response.data);
+                    alert(`user with ${email} is already a member`);
+                });
+        }
+    });
+
+    //not working..
+    document.querySelector("[data-search]").addEventListener("input", (e) => {
+        //search bar
+        const value = e.target.value.toLowerCase();
+        const userList = document.getElementById("user-list");
+        const li = userList.getElementsByTagName("li");
+        // console.log(li);
+        // console.log(Array.from(li));
+        Array.from(li).forEach((user) => {
+            const email = user.children[0].textContent;
+            const name = user.children[1].textContent;
+            if (
+                (email.toLowerCase().indexOf(value) ||
+                    email.toLowerCase().indexOf(value)) !== -1
+            ) {
+                user.style.display = "block";
+            } else {
+                user.style.display = "none";
+            }
+        });
+    });
+}
+
+
+
+//block of seperation of concerns
+
+
+//Handling the chat division
+{
+    
+    //if we have any messages stored into our localStorage already..
+    let localMsg = JSON.parse(localStorage.getItem("localMsg")); //getting array of messages from localMsg, if present, else 
+    let lastId;
+    if (localMsg == null) {
+        lastId = 0; //last id = 0 if localStorage localMsg has no value present.
+    }
+    if (localMsg.length > 0) {
+        lastId = localMsg[localMsg.length - 1].id; //If there are messages in localMsg,
+         //it retrieves the ID of the last message by accessing localMsg[localMsg.length - 1].id and assigns it to the lastId variable.
+         // to keep track of ID of last message. 
+    }
+    const groupId = localStorage.getItem("groupId");
+
+    if (localStorage.getItem("groupId") != null) {
+        setInterval(() => {
+            userAxios
+                .get(`/get-chats?id=${lastId}&gId=${groupId}`)
+                .then((response) => {
+                    //localstorage`
+                    let retrivedMsg = localMsg.concat(response.data.chat);
+                    //deleting old messages from local storage
+                    if (retrivedMsg.length > 100) {
+                        for (let i = 0; i < retrivedMsg.length - 100; i++) //loops until 100 so only 100 or lesser messages stays in retrivedMsg
+                            retrivedMsg.shift(); //removing first element from an array, 
+                    }
+
+                    //retrived array is then stored back into localMsg, so to fetch faster than DB.
+                    localStorage.setItem("localMsg", JSON.stringify(retrivedMsg));
+
+                    const div = document.getElementById("group-chat-receive-box");
+                    div.innerHTML = "";
+                    retrivedMsg.forEach((chat) => {
+                        div.innerHTML += `<div id="${chat.id}>"><span style="color:green;"><b>${chat.name}:</b></span><span>${chat.message}</span></div>`;
+                    });
+                })
+                .catch((err) => console.log(err.response));
+        }, 1000)
+    }
+
+
+
+    function sendFile(event) {
+        event.preventDefault();
+        const fileInput = document.getElementById("file-upload");
+        const formData = new FormData();
+        
+        formData.append("image", fileInput.files[0]);
+        userAxios.post("/upload", formData)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    const fileUrl = res.data.fileURL;
+                    const downloadLink = `<a href="${fileUrl}"download>Download file</a>`;
+                    const obj = {
+                        message: downloadLink, // Send the download link for the image
+                        name: name,
+                        groupId: localStorage.getItem("groupId"),
+                    };
+
+                    userAxios
+                        .post("/post-chat", obj)
+                        .then((res) => console.log(res))
+                        .catch((err) => console.log(err));
+
+
+                    const div = document.getElementById("group-chat-receive-box");
+                    div.innerHTML += `
+              <div>
+                <span style="color:green;"><b>${name}:</b></span>
+                <span>${downloadLink}</span>
+              </div>`;
+
+                    // Clear the input and scroll to the bottom
+                    fileInput.value = "";
+                    div.scrollTop = div.scrollHeight;
+                }
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }
+
+
+
+
+
+    function sendGroupMsg(event) {
+        event.preventDefault();
+
+        if (localStorage.getItem("groupId") == null) { //if groupID in localStorage is null, we ask user to first select the group
+            alert("Select a group first");
+            document.getElementById("group-chat-input").value = "";
+        } else {
+            const input = document.getElementById("group-chat-input").value;
+            const obj = {
+                message: input,
+                name: name,
+                groupId: localStorage.getItem("groupId"),
+            };
+
+            userAxios
+                .post("/post-chat", obj)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+
+            // Display the sent message or image in the chat box
+            const div = document.getElementById("group-chat-receive-box");
+            const chatMessageDiv = document.createElement("div");
+            chatMessageDiv.innerHTML = `
+            <span style="color:green;"><b>${name}:</b></span><span>${input}</span>`;
+            div.appendChild(chatMessageDiv);
+
+            // Clear the input and scroll to the bottom
+            document.getElementById("group-chat-input").value = "";
+            div.scrollTop = div.scrollHeight;
+        }
+    }
+
+}
+
+
