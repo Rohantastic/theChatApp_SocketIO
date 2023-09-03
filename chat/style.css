@@ -1,0 +1,201 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set a background color for the body */
+body {
+    background-color: #f0f0f0;
+    font-family: 'Baloo 2', sans-serif;
+}
+
+/* Style the top section */
+#top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c4257;
+    color: white;
+    padding: 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+#top span {
+    font-size: large;
+}
+
+#login-name {
+    color: black;
+}
+
+/* Style the logout button */
+#logout-btn {
+    background-color: #88a9c4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#logout-btn:hover {
+    background-color: #6e93b6;
+}
+
+/* Style the main section */
+#main {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+/* Style the group list container */
+.group-list-container {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.create-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.create-group-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-group button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-group button:hover {
+    background-color: #222;
+}
+
+/* Style the group list */
+h2 {
+    font-size: x-large;
+    margin-bottom: 10px;
+}
+
+.group-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: large;
+    border-top: 1px solid #ccc;
+}
+
+.group-list span {
+    flex: 1;
+    padding: 0 10px;
+}
+
+/* Style the group chat container */
+.group-chat-container {
+    flex: 2;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.message-container {
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.message-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: large;
+}
+
+.send-btn {
+    background-color: #2c4257;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.send-btn:hover {
+    background-color: #1e2a3a;
+}
+
+/* Style the file upload form */
+#file-upload {
+    display: none;
+}
+
+#send-file-btn {
+    color: white;
+    background: #4caf50;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#send-file-btn:hover {
+    background-color: #45a049;
+}
+
+/* Style the user list container */
+.user-list-container {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.user-list input[type="search"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: large;
+    margin-top: 10px;
+}
+
+/* Style the user list */
+.user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: large;
+    border-top: 1px solid #ccc;
+}
+
+.user-list span {
+    flex: 1;
+    padding: 0 10px;
+}

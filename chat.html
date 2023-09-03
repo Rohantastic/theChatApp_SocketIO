@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Window</title>
+    <link rel="stylesheet" href="./chat/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=PT+Serif&display=swap"
+        rel="stylesheet">
+    <script src="./chat/script.js" defer></script>
+</head>
+
+<body>
+    <section id="top">
+        <div>
+            <span style="font-size: large; color: #88a9c4ff;"><b>User:</b></span>
+            <span id="login-name" style="font-size: large; color: #88a9c4ff;"></span>
+        </div>
+        <div>
+            <span style="font-size: large;"><b></b></span>
+            <span id="current-group-name" style="font-size: large; color: #88a9c4ff;"></span>
+        </div>
+        <div id="logout-btn-div">
+            <button id="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </section>
+    <section id="main">
+        <div class="group-list-container">
+            <form onsubmit="createGroup(event)" class="create-group">
+                <input type="text" id="create-group-input" class="create-group-input" placeholder="Enter group name"
+                    required>
+                <button type="submit" class="" style="background-color: #88a9c4;">Create</button>
+            </form>
+            <h2 style="color: #88a9c4;">Your Group:</h2>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <hr>
+            <div id="group-list-wrapper">
+                <div id="group-list" class="group-list"></div>
+                <hr>
+                <div id="users-inside-group"></div>
+            </div>
+        </div>
+        <div class="group-chat-container">
+            <h2 style="color: #88a9c4;">Chat:</h2>
+            <div id="group-chat-receive-box" class="message-container"></div>
+            <form action="" onsubmit="sendGroupMsg(event)" id="group-chat-form" class="send-container">
+                <input type="text" id="group-chat-input" class="message-input" placeholder="Type your message" required>
+                <button type="submit" id="send-btn-group" class="send-btn" style="background-color: #88a9c4;">Send</button>
+            </form>
+            <form action="" onsubmit="sendFile(event)" style="background: white; margin:10px; width:max-content "
+                enctype="multipart/form-data">
+                <input type="file" name="file" id="file-upload" required>
+                <button type="submit" id="send-file-btn"
+                    style="color: white; background: #88a9c4; border:none; cursor: pointer;">Send File</button>
+            </form>
+        </div>
+        <div class="user-list-container">
+            <h2 style="color: #88a9c4;">All User</h2>
+            <li style="color: #88a9c4;">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <hr>
+            <input type="search" id="search" placeholder="Filter" data-search>
+            <div id="user-list" class="user-list"></div>
+        </div>
+    </section>
+</body>
+
+</html>
