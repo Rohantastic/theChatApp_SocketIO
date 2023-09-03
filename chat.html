@@ -36,7 +36,7 @@
                     required>
                 <button type="submit" class="" style="background-color: #88a9c4;">Create</button>
             </form>
-            <h2 style="color: #88a9c4;">Your Group:</h2>
+            <h2 style="color: #88a9c4;">Your Group:-</h2>
             <li>
                 <span></span>
                 <span></span>
@@ -50,8 +50,22 @@
                 <div id="users-inside-group"></div>
             </div>
         </div>
+        
+        <div class="user-list-container">
+            <h2 style="color: #88a9c4;">All User:-</h2>
+            <li style="color: #88a9c4;">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <hr>
+            
+            <div id="user-list" class="user-list"></div>
+        </div>
+
         <div class="group-chat-container">
-            <h2 style="color: #88a9c4;">Chat:</h2>
+            <h2 style="color: #88a9c4;">Chat:-</h2>
             <div id="group-chat-receive-box" class="message-container"></div>
             <form action="" onsubmit="sendGroupMsg(event)" id="group-chat-form" class="send-container">
                 <input type="text" id="group-chat-input" class="message-input" placeholder="Type your message" required>
@@ -63,18 +77,6 @@
                 <button type="submit" id="send-file-btn"
                     style="color: white; background: #88a9c4; border:none; cursor: pointer;">Send File</button>
             </form>
-        </div>
-        <div class="user-list-container">
-            <h2 style="color: #88a9c4;">All User</h2>
-            <li style="color: #88a9c4;">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </li>
-            <hr>
-            <input type="search" id="search" placeholder="Filter" data-search>
-            <div id="user-list" class="user-list"></div>
         </div>
     </section>
 </body>
