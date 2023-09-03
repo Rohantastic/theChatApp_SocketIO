@@ -128,13 +128,17 @@ exports.removeUser = async(req,res)=>{
         const { groupId, email } = req.body;
         console.log(req.body)
 
+        console.log('>>>>>>>req.user.id ', req.user.id);
+
         //for checking current user if admin
         const adminCheck= await UserGroup.findOne({where:{userId:req.user.id,groupId:groupId}});
         // console.log(adminCheck);
+        console.log('>>>>>>isAdmin Check', adminCheck.isAdmin);
         if(adminCheck.isAdmin === false){
             return res.status(400).json({message:"You are not an admin"});
         }
 
+        console.log('>>>>After isAdmin check');
         const userToRemove=await User.findOne({ where: { email } })
         // console.log(userToRemove)
         const result= await UserGroup.destroy({where:{userId:userToRemove.id,groupId:groupId}});

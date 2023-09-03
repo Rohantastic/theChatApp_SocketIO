@@ -107,6 +107,7 @@ const userAxios = axios.create({
                         document.getElementById("users-inside-group").innerHTML += `
                         <li id="${user.groups[0].id}">
                         <span style="color: #88a9c4ff;">${user.name}</span>
+                        <span style="display: none;">${user.email}</span>
                             <button id="remove-user-btn" class="user-btn">Remove</button>
                             <button id="make-admin-btn">Make Admin</button>
                         </li> `; //showing userName at show all users list.
