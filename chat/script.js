@@ -23,31 +23,35 @@ const userAxios = axios.create({
     }
 
     function logout() {
+        console.log('>>>>getting inside logout function');
         localStorage.clear();
-        window.localStorage.href = './login.html';
+        window.location.href = './login.html';
     }
 }
 
-function logout() {
-    localStorage.clear();
-    window.localStorage.href = './login.html';
-}
+// function logout() {
+//     console.log('>>>>getting inside logout function');
+//     localStorage.clear();
+//     window.localStorage.href = './login.html';
+// }
+
 {
     userAxios.get("/get-groups").then((res) => {
         const groupListDiv = document.getElementById("group-list");
         groupListDiv.innerHTML = "";
         res.data.groups.forEach((group) => {
             groupListDiv.innerHTML += `
-            <li id="${group.id}" style="padding:5px 0;">
-            <span>${group.name}</span>
-            <button id="show-users">Show Users</button>
-            <button id="change-group-btn" class="group-btn">Enter Chat</button>
-            <button id="delete-group-btn" class="group-btn">Delete Group</button>
+            <li id="${group.id}" style="padding: 5px 0; color: #88a9c4ff;">
+                <span>${group.name}</span>
+                <button id="show-users" style="background-color: #88a9c4ff;">Show Users</button>
+                <button id="change-group-btn" class="group-btn" style="background-color: #88a9c4ff;">Enter Chat</button>
+                <button id="delete-group-btn" class="group-btn" style="background-color: #88a9c4ff;">Delete Group</button>
             </li>
             `;
         });
     })
-        .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
+    
 
     function createGroup(event) {
         event.preventDefault();
@@ -102,7 +106,7 @@ function logout() {
                     res.data.userData.forEach((user) => {
                         document.getElementById("users-inside-group").innerHTML += `
                         <li id="${user.groups[0].id}">
-                            <span>${user.name}</span> 
+                        <span style="color: #88a9c4ff;">${user.name}</span>
                             <button id="remove-user-btn" class="user-btn">Remove</button>
                             <button id="make-admin-btn">Make Admin</button>
                         </li> `; //showing userName at show all users list.
@@ -133,7 +137,7 @@ function logout() {
 
         if (e.target.id === "make-admin-btn") { //to make admin 
             const obj = {
-                email: e.target.parentNode.children[1].innerText, //getting email of user from parentNode
+                email: e.target.parentNode.children[0].innerText, //getting email of user from parentNode
                 groupId: e.target.parentNode.id //getting groupId
             }
             userAxios.post("/make-admin", obj) //sending object to backend API to make user an admin by its email ID
@@ -156,16 +160,17 @@ function logout() {
             userListDiv.innerHTML = "";
             res.data.user.forEach((user) => {
                 userListDiv.innerHTML += `
-              <li id='user-${user.id}' class="user-list-inside" style="padding:5px 0;" user-list-li>
-              <span>${user.name}</span>
-              <span>${user.email}</span>
-              <label for="accept">Admin</label>
+              <li id='user-${user.id}' class="user-list-inside" style="padding: 5px 0; color: #88a9c4ff;" user-list-li>
+              <span style="color: #88a9c4ff;">${user.name}</span>
+              <span style="color: #88a9c4ff;">${user.email}</span>
+              <label for="accept"><small>👑</small></label>
               <input type="checkbox" id="accept">
-              <button id="add-user-btn" class="user-btn">Add</button>
+              <button id="add-user-btn" class="user-btn" style="background-color: #88a9c4ff;">Add</button>
               </li> `;
             });
         })
         .catch((err) => console.log(err.response));
+
 
     document.getElementById("user-list").addEventListener("click", (e) => {
         //for adding/removing users
@@ -193,7 +198,7 @@ function logout() {
                 })
                 .catch((err) => {
                     console.log(err.response.data);
-                    alert(`user with ${email} is already a member`);
+                    alert(`You are not an Admin`);
                 });
         }
     });
@@ -261,7 +266,7 @@ function logout() {
                     const div = document.getElementById("group-chat-receive-box");
                     div.innerHTML = "";
                     retrivedMsg.forEach((chat) => {
-                        div.innerHTML += `<div id="${chat.id}>"><span style="color:green;"><b>${chat.name}:</b></span><span>${chat.message}</span></div>`;
+                        div.innerHTML += `<div id="${chat.id}>"><span style="color: grey;"><b>${chat.name}:- </b></span><span>${chat.message}</span></div>`;
                     });
                 })
                 .catch((err) => console.log(err.response));

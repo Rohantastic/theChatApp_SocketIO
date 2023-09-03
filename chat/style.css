@@ -55,7 +55,7 @@ body {
 /* Style the group list container */
 .group-list-container {
     flex: 1;
-    background-color: white;
+    background-color: #2c4257ff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -110,7 +110,7 @@ h2 {
 /* Style the group chat container */
 .group-chat-container {
     flex: 2;
-    background-color: white;
+    background-color: #2c4257ff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -170,7 +170,7 @@ h2 {
 /* Style the user list container */
 .user-list-container {
     flex: 1;
-    background-color: white;
+    background-color: #2c4257ff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);

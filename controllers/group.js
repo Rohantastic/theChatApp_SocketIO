@@ -151,7 +151,13 @@ exports.removeUser = async(req,res)=>{
 exports.makeAdmin=async(req,res)=>{
     try{
         const {email, groupId}= req.body;
-        const user= await User.findOne({where:{email:email}});
+        //getting name not email
+
+        console.log('>>>>>>>>>>>>>Email and groupID ' , email); 
+        console.log('>>>>>>>>>>>>>Email and groupID ' , groupId);
+        
+        const user= await User.findOne({where:{name:email}});
+
         await UserGroup.update({isAdmin:true},{where:{userId:user.id,groupId:groupId}});
         res.status(200).json({message:"user is now admin"})
     }
