@@ -164,9 +164,9 @@ const userAxios = axios.create({
               <li id='user-${user.id}' class="user-list-inside" style="padding: 5px 0; color: #88a9c4ff;" user-list-li>
               <span style="color: #88a9c4ff;">${user.name}</span>
               <span style="color: #88a9c4ff;">${user.email}</span>
-              <label for="accept"><small>👑</small></label>
-              <input type="checkbox" id="accept">
-              <button id="add-user-btn" class="user-btn" style="background-color: #88a9c4ff;">Add</button>
+              <label for="accept"><small></small></label>
+              <input type="checkbox" id="accept" style="visibility: hidden">
+              <button id="add-user-btn" class="user-btn" style="background-color: #88a9c4ff; ">Add</button>
               </li> `;
             });
         })
