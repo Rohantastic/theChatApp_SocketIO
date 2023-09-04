@@ -274,36 +274,42 @@ const userAxios = axios.create({
         }, 1000)
     }
 
-
-
     function sendFile(event) {
+        console.log('send file is getting triggered');
         event.preventDefault();
-        const fileInput = document.getElementById("file-upload");
+        const fileInput = document.getElementById("file-input");
         const formData = new FormData();
         
         formData.append("image", fileInput.files[0]);
+        console.log('before userAxios.post("/upload", formData)');
+
+
         userAxios.post("/upload", formData)
-            .then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                    const fileUrl = res.data.fileURL;
+            .then((response) => { //problem is somewhere inside this. because formData is getting correctly called into my backend, it is also returning fileURL correctly i have checked, not getting why i am not able to go in .then block
+                console.log("checking response from /upload");
+                if (response.status === 200) {
+                    const fileUrl = response.data.fileURL;
                     const downloadLink = `<a href="${fileUrl}"download>Download file</a>`;
+                    console.log('>>>download Link:', downloadLink);
                     const obj = {
                         message: downloadLink, // Send the download link for the image
                         name: name,
                         groupId: localStorage.getItem("groupId"),
                     };
 
+                    console.log('>>>>> before userAxios postchat', obj);
                     userAxios
                         .post("/post-chat", obj)
-                        .then((res) => console.log(res))
+                        .then((res) =>{ console.log(res)
+                        console.log('>>>>>sending file into post chat, ', obj);
+                        })
                         .catch((err) => console.log(err));
 
 
                     const div = document.getElementById("group-chat-receive-box");
                     div.innerHTML += `
               <div>
-                <span style="color:green;"><b>${name}:</b></span>
+                <span style="color:grey;"><b>${name}:</b></span>
                 <span>${downloadLink}</span>
               </div>`;
 

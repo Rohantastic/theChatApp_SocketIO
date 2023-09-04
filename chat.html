@@ -71,12 +71,11 @@
                 <input type="text" id="group-chat-input" class="message-input" placeholder="Type your message" required>
                 <button type="submit" id="send-btn-group" class="send-btn" style="background-color: #88a9c4;">Send</button>
             </form>
-            <form action="" onsubmit="sendFile(event)" style="background: white; margin:10px; width:max-content "
-                enctype="multipart/form-data">
-                <input type="file" name="file" id="file-upload" required>
-                <button type="submit" id="send-file-btn"
-                    style="color: white; background: #88a9c4; border:none; cursor: pointer;">Send File</button>
+            <form onsubmit="sendFile(event)" enctype="multipart/form-data">
+                <input type="file" id="file-input">
+                <button type="submit">Send File</button>
             </form>
+            
         </div>
     </section>
 </body>

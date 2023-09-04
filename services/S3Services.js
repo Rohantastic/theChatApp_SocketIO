@@ -1,14 +1,12 @@
 const S3 = require('aws-sdk/clients/s3');
 require('dotenv').config();
 
-const bucketName = process.env.BUCKET_NAME;
-const region = process.env.BUCKET_REGION;
+const bucketName = process.env.AWS_BUCKET_NAME;
 const accessKeyId = process.env.IAM_USER_KEY;
 const secretAccessKey = process.env.IAM_USER_SECRET;
 
 // intialize instance of s3 object
 const s3 = new S3({
-    region,
     accessKeyId,
     secretAccessKey
 });
