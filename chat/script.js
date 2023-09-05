@@ -143,6 +143,7 @@ const userAxios = axios.create({
             }
             userAxios.post("/make-admin", obj) //sending object to backend API to make user an admin by its email ID
                 .then((res) => {
+                    alert('The user is now an Admin');
                     console.log(res);
                 })
                 .catch((err) => console.log(err));
@@ -289,7 +290,7 @@ const userAxios = axios.create({
                 console.log("checking response from /upload");
                 if (response.status === 200) {
                     const fileUrl = response.data.fileURL;
-                    const downloadLink = `<a href="${fileUrl}"download>Download file</a>`;
+                    const downloadLink = `<a href="${fileUrl}"download>Open</a>`;
                     console.log('>>>download Link:', downloadLink);
                     const obj = {
                         message: downloadLink, // Send the download link for the image
